@@ -95,14 +95,16 @@ class _eMainState extends State<eMain> {
               Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
           onTap: () {
             int goto = int.parse(list[index].page);
-            Future.delayed(const Duration(milliseconds: 200), () {
               switch (list[index].detail) {
                 case "1":
                   {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => aDetailPage(goto)));
+                            builder: (context) => aDetailPage(goto))
+                    ).then((value) {
+                      setState(() {});
+                    });
                   }
                   break;
 
@@ -111,7 +113,10 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => bDetailPage(goto)));
+                            builder: (context) => bDetailPage(goto))
+                    ).then((value) {
+                      setState(() {});
+                    });
                   }
                   break;
 
@@ -120,7 +125,10 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => cDetailPage(goto)));
+                            builder: (context) => cDetailPage(goto))
+                    ).then((value) {
+                      setState(() {});
+                    });
                   }
                   break;
 
@@ -129,11 +137,13 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => dDetailPage(goto)));
+                            builder: (context) => dDetailPage(goto))
+                    ).then((value) {
+                      setState(() {});
+                    });
                   }
                   break;
               }
-            });
           },
           onLongPress: () {
             _showDialog(context).then((value) {

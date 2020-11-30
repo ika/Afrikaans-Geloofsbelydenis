@@ -16,8 +16,9 @@ import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
 
-  String _dbName = 'gela.db';   // change db name to update
+  String _dbName = 'gelb.db';   // change db name to update
   String _bMarks = 'bkmarks';
+  int _ver = 2;
 
   static DBProvider _dbProvider;
   static Database _database;
@@ -51,15 +52,27 @@ class DBProvider {
       } catch (_) {}
 
       ByteData data = await rootBundle.load(join("assets", _dbName));
-      List<int> bytes =
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
-      // Save copied asset to documents
       await File(path).writeAsBytes(bytes, flush: true);
+
     }
 
-    return await openDatabase(path, version: 2, onOpen: (db) async {} );
+    return await openDatabase(path);
 
+  }
+
+/*  Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  String path = join(documentsDirectory.path, "working_data.db");
+
+  ByteData data = await rootBundle.load(join("assets", "stored_data.db"));
+  List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  await new File(path).writeAsBytes(bytes);*/
+
+  Future<void> writeToFile(ByteData data, String path) {
+    final buffer = data.buffer;
+    return new File(path).writeAsBytes(
+        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
   // void _onCreate(Database db, int version) async {

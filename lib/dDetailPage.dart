@@ -5,11 +5,9 @@ import 'package:flutter_html/style.dart';
 import 'bmModel.dart';
 import 'dbModel.dart';
 import 'dbHelper.dart';
-
-enum ConfirmAction { CANCEL, ACCEPT }
+import 'bmDialog.dart';
 
 DBProvider dbProvider = DBProvider();
-String note = "";
 
 class dDetailPage extends StatelessWidget {
   List<Chapter> chapters;
@@ -33,72 +31,6 @@ class dDetailPage extends StatelessWidget {
   }
 }
 
-Future _showDialog(context, arr) async {
-
-  String txt = arr[1].toString();
-
-  if(txt.length > 40) {
-    txt.substring(1,40);
-  }
-
-  TextEditingController _controller = new TextEditingController();
-  note = _controller.text = txt;
-
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Boekmerk?'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(arr[0].toString(), style: TextStyle(fontWeight: FontWeight.bold),),
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Container(
-                  width: 100,
-                  child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    autofocus: true,
-                    maxLength: 50,
-                    controller: _controller,
-                    decoration: new InputDecoration(
-                        labelText: 'Tik teks in',
-                        labelStyle: new TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
-                    onChanged: (value) {
-                      note = value;
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Ja', style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.ACCEPT);
-            },
-          ),
-          TextButton(
-            child: Text('Nee', style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.CANCEL);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
 showChapters(chapters, index, context) {
   String heading = "Leerreëls";
   String chap = "Gedeelte";
@@ -112,8 +44,8 @@ showChapters(chapters, index, context) {
       fontFamily: 'Raleway-Regular',
       fontSize: FontSize(16.0));
 
-  final h2 = Style(fontSize: FontSize(18.0));
-  final h3 = Style(fontSize: FontSize(16.0));
+  final h2 = Style(fontSize: FontSize(16.0));
+  final h3 = Style(fontSize: FontSize(18.0));
 
   final page0 = Html(
     data: chapters[0].text,
@@ -219,7 +151,7 @@ showChapters(chapters, index, context) {
                 arr[0] = heading + " " + chap + " " + sp.toString();
                 arr[1] = chapters[pg].title;
 
-                _showDialog(context, arr).then((value) {
+                bmDialog().showBmDialog(context, arr).then((value) {
                   if (value == ConfirmAction.ACCEPT) {
                     final model = Model(
                       title: arr[0].toString(),

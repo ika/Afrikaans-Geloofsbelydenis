@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:geloofsbelydenis/bmDialog.dart';
 import 'bmModel.dart';
 import 'dbModel.dart';
 import 'dbHelper.dart';
 
-enum ConfirmAction { CANCEL, ACCEPT }
-
 DBProvider dbProvider = DBProvider();
-
-String note = "";
 
 class aDetailPage extends StatelessWidget {
 
@@ -35,72 +32,6 @@ class aDetailPage extends StatelessWidget {
         });
   }
 
-}
-
-Future _showDialog(context, arr) async {
-
-  String txt = arr[1].toString();
-
-  if(txt.length > 40) {
-    txt.substring(1,40);
-  }
-
-  TextEditingController _controller = new TextEditingController();
-  note = _controller.text = txt;
-
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Boekmerk?'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(arr[0].toString(), style: TextStyle(fontWeight: FontWeight.bold),),
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Container(
-                  width: 100,
-                  child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    autofocus: true,
-                    maxLength: 50,
-                    controller: _controller,
-                    decoration: new InputDecoration(
-                        labelText: 'Tik teks in',
-                        labelStyle: new TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
-                    onChanged: (value) {
-                      note = value;
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Ja', style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.ACCEPT);
-            },
-          ),
-          TextButton(
-            child: Text('Nee', style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.CANCEL);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
 
 showChapters(chapters, index, context) {
@@ -317,7 +248,7 @@ showChapters(chapters, index, context) {
             color: Colors.yellow,
           ),
           onPressed: () {
-            print('PRESSED');
+
             int pg = pageController.page.toInt();
             int sp = pg+1;
 
@@ -325,7 +256,7 @@ showChapters(chapters, index, context) {
             arr[0] = heading + " " + chap + " " + sp.toString();
             arr[1] = chapters[pg].title;
 
-            _showDialog(context, arr).then((value) {
+            bmDialog().showBmDialog(context, arr).then((value) {
               if (value == ConfirmAction.ACCEPT) {
                 final model = Model(
                     title: arr[0].toString(),
