@@ -18,7 +18,6 @@ class DBProvider {
 
   String _dbName = 'gelb.db';   // change db name to update
   String _bMarks = 'bkmarks';
-  int _ver = 2;
 
   static DBProvider _dbProvider;
   static Database _database;
@@ -110,7 +109,8 @@ class DBProvider {
 
   Future<List<Model>> getBookMarkList() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT id, title, subtitle, detail, page FROM $_bMarks");
+    final List<Map<String, dynamic>> maps 
+    = await db.rawQuery("SELECT id, title, subtitle, detail, page FROM $_bMarks ORDER BY id DESC");
 
     return List.generate(maps.length, (i) {
       return Model(
