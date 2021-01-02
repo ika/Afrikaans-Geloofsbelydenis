@@ -7,13 +7,18 @@ import 'dbModel.dart';
 import 'dbHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'aDetailPage.dart';
-import 'bDetailPage.dart';
 import 'package:share/share.dart';
-
 import 'eMain.dart';
 
-class aMain extends StatelessWidget {
-  DBProvider dbProvider = DBProvider();
+DBProvider dbProvider = DBProvider();
+
+class AMain extends StatefulWidget {
+  @override
+  _AMainState createState() => _AMainState();
+}
+
+class _AMainState extends State<AMain> {
+
   List<Chapter> chapters = List<Chapter>();
 
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class aMain extends StatelessWidget {
               Future.delayed(const Duration(milliseconds: 200), () {
                 Navigator.push(context,
                     CupertinoPageRoute(
-                        builder: (context) => aDetailPage(index)));
+                        builder: (context) => ADetailPage(index)));
               });
             });
 
@@ -128,7 +133,7 @@ class aMain extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => bMain()));
+                                      builder: (context) => BMain()));
                             }),
                       }),
                   new ListTile(
@@ -143,7 +148,7 @@ class aMain extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => cMain()));
+                                      builder: (context) => CMain()));
                             }),
                       }),
                   new ListTile(
@@ -158,7 +163,7 @@ class aMain extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => dMain()));
+                                      builder: (context) => DMain()));
                             }),
                       }),
                   new ListTile(
@@ -173,7 +178,7 @@ class aMain extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => eMain()));
+                                      builder: (context) => EMain()));
                             }),
                       }),
                   new ListTile(

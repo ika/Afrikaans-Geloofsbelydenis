@@ -95,7 +95,7 @@ class DBProvider {
     return _database.close();
   }
 
-  Future<void> saveBookMark(Model model) async {
+  Future<void> saveBookMark(BMModel model) async {
     final db = await database;
     await db.insert(_bMarks, model.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -107,13 +107,13 @@ class DBProvider {
     await db.delete(_bMarks, where: "id = ?", whereArgs: [id]);
   }
 
-  Future<List<Model>> getBookMarkList() async {
+  Future<List<BMModel>> getBookMarkList() async {
     final db = await database;
     final List<Map<String, dynamic>> maps 
     = await db.rawQuery("SELECT id, title, subtitle, detail, page FROM $_bMarks ORDER BY id DESC");
 
     return List.generate(maps.length, (i) {
-      return Model(
+      return BMModel(
         id: maps[i]['id'],
         title: maps[i]['title'],
         subtitle: maps[i]['subtitle'],

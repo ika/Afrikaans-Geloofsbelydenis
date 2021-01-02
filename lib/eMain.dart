@@ -47,19 +47,19 @@ Future _showDialog(context) async {
   );
 }
 
-class eMain extends StatefulWidget {
+class EMain extends StatefulWidget {
   @override
-  _eMainState createState() => _eMainState();
+  _EMainState createState() => _EMainState();
 }
 
-class _eMainState extends State<eMain> {
-  List<Model> list = List<Model>();
-  Model model;
+class _EMainState extends State<EMain> {
+  List<BMModel> list = List<BMModel>();
+  BMModel model;
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Model>>(
+    return FutureBuilder<List<BMModel>>(
         future: dbProvider.getBookMarkList(),
-        builder: (context, AsyncSnapshot<List<Model>> snapshot) {
+        builder: (context, AsyncSnapshot<List<BMModel>> snapshot) {
           if (snapshot.hasData) {
             list = snapshot.data;
             return showChapterList(list, context);
@@ -101,7 +101,7 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => aDetailPage(goto))
+                            builder: (context) => ADetailPage(goto))
                     ).then((value) {
                       setState(() {});
                     });
@@ -113,7 +113,7 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => bDetailPage(goto))
+                            builder: (context) => BDetailPage(goto))
                     ).then((value) {
                       setState(() {});
                     });
@@ -125,7 +125,7 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => cDetailPage(goto))
+                            builder: (context) => CDetailPage(goto))
                     ).then((value) {
                       setState(() {});
                     });
@@ -137,7 +137,7 @@ class _eMainState extends State<eMain> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => dDetailPage(goto))
+                            builder: (context) => DDetailPage(goto))
                     ).then((value) {
                       setState(() {});
                     });

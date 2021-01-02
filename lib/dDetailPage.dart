@@ -8,14 +8,20 @@ import 'dbHelper.dart';
 import 'bmDialog.dart';
 
 DBProvider dbProvider = DBProvider();
+int index = 0;
 
-class dDetailPage extends StatelessWidget {
-  List<Chapter> chapters;
-  int index;
+class DDetailPage extends StatefulWidget {
 
-  dDetailPage(int index) {
-    this.index = index;
+  DDetailPage(int indx) {
+    index = indx;
   }
+
+  @override
+  _DDetailPageState createState() => _DDetailPageState();
+}
+
+class _DDetailPageState extends State<DDetailPage> {
+  List<Chapter> chapters;
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<Chapter>>(
@@ -151,9 +157,9 @@ showChapters(chapters, index, context) {
                 arr[0] = heading + " " + chap + " " + sp.toString();
                 arr[1] = chapters[pg].title;
 
-                bmDialog().showBmDialog(context, arr).then((value) {
+                BMDialog().showBmDialog(context, arr).then((value) {
                   if (value == ConfirmAction.ACCEPT) {
-                    final model = Model(
+                    final model = BMModel(
                       title: arr[0].toString(),
                       subtitle: note,
                       detail: "4",

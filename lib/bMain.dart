@@ -5,8 +5,15 @@ import 'dbModel.dart';
 import 'dbHelper.dart';
 import 'package:flutter/cupertino.dart';
 
-class bMain extends StatelessWidget {
-  DBProvider dbProvider = DBProvider();
+DBProvider dbProvider = DBProvider();
+
+class BMain extends StatefulWidget {
+  @override
+  _BMainState createState() => _BMainState();
+}
+
+class _BMainState extends State<BMain> {
+
   List<Chapter> chapters = List<Chapter>();
 
   Widget build(BuildContext context) {
@@ -59,7 +66,7 @@ class bMain extends StatelessWidget {
             Navigator.push(
                 context,
                 CupertinoPageRoute(
-                    builder: (context) => bDetailPage(index)));
+                    builder: (context) => BDetailPage(index)));
           });
         });
 

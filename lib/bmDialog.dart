@@ -5,7 +5,7 @@ enum ConfirmAction { CANCEL, ACCEPT }
 
 String note = "";
 
-class bmDialog {
+class BMDialog {
   Future showBmDialog(context, arr) async {
 
     String txt = arr[1].toString();
@@ -13,8 +13,8 @@ class bmDialog {
     // txt = txt.replaceAll(RegExp(r'[0-9]+'), '');
     // txt = txt.replaceAll(RegExp(r'[\(\)\-]+'), '');
 
-    if (txt.length > 40) {
-      txt = txt.substring(1, 40);
+    if (txt.length > 35) {
+      txt = txt.substring(0, 35);
     }
 
     TextEditingController _controller = new TextEditingController();

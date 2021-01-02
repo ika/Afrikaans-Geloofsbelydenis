@@ -8,16 +8,22 @@ import 'dbModel.dart';
 import 'dbHelper.dart';
 
 DBProvider dbProvider = DBProvider();
+int index = 0;
 
-class aDetailPage extends StatelessWidget {
+class ADetailPage extends StatefulWidget {
 
-  List<Chapter> chapters;
-  int index;
-  String table = "atexts";
-
-  aDetailPage(int index) {
-    this.index = index;
+  ADetailPage(int indx) {
+    index = indx;
   }
+
+  @override
+  _ADetailPageState createState() => _ADetailPageState();
+}
+
+class _ADetailPageState extends State<ADetailPage> {
+  List<Chapter> chapters;
+
+  String table = "atexts";
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<Chapter>>(
@@ -31,11 +37,9 @@ class aDetailPage extends StatelessWidget {
           }
         });
   }
-
 }
 
 showChapters(chapters, index, context) {
-
   String heading = "Geloofsbelydenis";
   String chap = "Artikel";
 
@@ -237,40 +241,37 @@ showChapters(chapters, index, context) {
   );
 
   topAppBar(context) => AppBar(
-    elevation: 0.1,
-    backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-    title: Text(heading),
-    centerTitle: true,
-    actions: [
-      IconButton(
-          icon: Icon(
-            Icons.bookmark_outline_sharp,
-            color: Colors.yellow,
-          ),
-          onPressed: () {
+        elevation: 0.1,
+        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+        title: Text(heading),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.bookmark_outline_sharp,
+                color: Colors.yellow,
+              ),
+              onPressed: () {
+                int pg = pageController.page.toInt();
+                int sp = pg + 1;
 
-            int pg = pageController.page.toInt();
-            int sp = pg+1;
+                var arr = new List(2);
+                arr[0] = heading + " " + chap + " " + sp.toString();
+                arr[1] = chapters[pg].title;
 
-            var arr = new List(2);
-            arr[0] = heading + " " + chap + " " + sp.toString();
-            arr[1] = chapters[pg].title;
-
-            bmDialog().showBmDialog(context, arr).then((value) {
-              if (value == ConfirmAction.ACCEPT) {
-                final model = Model(
-                    title: arr[0].toString(),
-                    subtitle: note,
-                    detail: "1",
-                    page: pg.toString()
-                );
-                dbProvider.saveBookMark(model);
-              }
-            });
-
-          }),
-    ],
-  );
+                BMDialog().showBmDialog(context, arr).then((value) {
+                  if (value == ConfirmAction.ACCEPT) {
+                    final model = BMModel(
+                        title: arr[0].toString(),
+                        subtitle: note,
+                        detail: "1",
+                        page: pg.toString());
+                    dbProvider.saveBookMark(model);
+                  }
+                });
+              }),
+        ],
+      );
 
   return Scaffold(
       appBar: topAppBar(context),
