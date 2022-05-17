@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
 import 'package:geloofsbelydenis/bmDialog.dart';
 import 'bmModel.dart';
+import 'bmQueries.dart';
 import 'dbModel.dart';
-import 'dbHelper.dart';
+import 'dbQueries.dart';
 
-DBProvider dbProvider = DBProvider();
+DbQueries _dbQueries = DbQueries();
+BmQueries _bmQueries = BmQueries();
 int index = 0;
 
 class ADetailPage extends StatefulWidget {
-
-  ADetailPage(int indx) {
+  ADetailPage(int indx, {Key? key}) : super(key: key) {
     index = indx;
   }
 
@@ -21,21 +20,23 @@ class ADetailPage extends StatefulWidget {
 }
 
 class _ADetailPageState extends State<ADetailPage> {
-  List<Chapter> chapters;
+  List<Chapter> chapters = List<Chapter>.empty();
 
   String table = "atexts";
 
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Chapter>>(
-        future: dbProvider.getChapters(table),
-        builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
-          if (snapshot.hasData) {
-            chapters = snapshot.data;
-            return showChapters(chapters, index, context);
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+      future: _dbQueries.getChapters(table),
+      builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
+        if (snapshot.hasData) {
+          chapters = snapshot.data!;
+          return showChapters(chapters, index, context);
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
 
@@ -47,13 +48,18 @@ showChapters(chapters, index, context) {
       PageController(initialPage: chapters[index].id);
 
   final html = Style(
-      backgroundColor: Colors.white30,
-      padding: EdgeInsets.all(15.0),
-      fontFamily: 'Raleway-Regular',
-      fontSize: FontSize(16.0));
+    backgroundColor: Colors.white30,
+    padding: const EdgeInsets.all(15.0),
+    fontFamily: 'Raleway-Regular',
+    fontSize: const FontSize(16.0),
+  );
 
-  final h2 = Style(fontSize: FontSize(18.0));
-  final h3 = Style(fontSize: FontSize(16.0));
+  final h2 = Style(
+    fontSize: const FontSize(18.0),
+  );
+  final h3 = Style(
+    fontSize: const FontSize(16.0),
+  );
 
   final page0 = Html(
     data: chapters[0].text,
@@ -242,192 +248,161 @@ showChapters(chapters, index, context) {
 
   topAppBar(context) => AppBar(
         elevation: 0.1,
-        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+        backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
         title: Text(heading),
         centerTitle: true,
         actions: [
           IconButton(
-              icon: Icon(
-                Icons.bookmark_outline_sharp,
-                color: Colors.yellow,
-              ),
-              onPressed: () {
-                int pg = pageController.page.toInt();
-                int sp = pg + 1;
+            icon: const Icon(
+              Icons.bookmark_outline_sharp,
+              color: Colors.yellow,
+            ),
+            onPressed: () {
+              int pg = pageController.page!.toInt();
+              int sp = pg + 1;
 
-                var arr = new List(2);
-                arr[0] = heading + " " + chap + " " + sp.toString();
-                arr[1] = chapters[pg].title;
+              var arr = [];
+              arr[0] = heading + " " + chap + " " + sp.toString();
+              arr[1] = chapters[pg].title;
 
-                BMDialog().showBmDialog(context, arr).then((value) {
+              BMDialog().showBmDialog(context, arr).then(
+                (value) {
                   if (value == ConfirmAction.ACCEPT) {
-                    final model = BMModel(
-                        title: arr[0].toString(),
-                        subtitle: note,
-                        detail: "1",
-                        page: pg.toString());
-                    dbProvider.saveBookMark(model);
+                    final model = BmModel(
+                      id: 0,
+                      title: arr[0].toString(),
+                      subtitle: note,
+                      detail: "1",
+                      page: pg.toString(),
+                    );
+                    _bmQueries.saveBookMark(model);
                   }
-                });
-              }),
+                },
+              );
+            },
+          ),
         ],
       );
 
   return Scaffold(
-      appBar: topAppBar(context),
-      body: PageView(
-        controller: pageController,
-        scrollDirection: Axis.horizontal,
-        pageSnapping: true,
-        children: [
-          Container(
-              child: SingleChildScrollView(
-            child: page0,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page1,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page2,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page3,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page4,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page5,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page6,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page7,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page8,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page9,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page10,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page11,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page12,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page13,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page14,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page15,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page16,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page17,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page18,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page19,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page20,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page21,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page22,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page23,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page24,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page25,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page26,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page27,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page28,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page29,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page30,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page31,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page32,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page33,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page34,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page35,
-          )),
-          Container(
-              child: SingleChildScrollView(
-            child: page36,
-          )),
-        ],
-      ));
+    appBar: topAppBar(context),
+    body: PageView(
+      controller: pageController,
+      scrollDirection: Axis.horizontal,
+      pageSnapping: true,
+      children: [
+        SingleChildScrollView(
+          child: page0,
+        ),
+        SingleChildScrollView(
+          child: page1,
+        ),
+        SingleChildScrollView(
+          child: page2,
+        ),
+        SingleChildScrollView(
+          child: page3,
+        ),
+        SingleChildScrollView(
+          child: page4,
+        ),
+        SingleChildScrollView(
+          child: page5,
+        ),
+        SingleChildScrollView(
+          child: page6,
+        ),
+        SingleChildScrollView(
+          child: page7,
+        ),
+        SingleChildScrollView(
+          child: page8,
+        ),
+        SingleChildScrollView(
+          child: page9,
+        ),
+        SingleChildScrollView(
+          child: page10,
+        ),
+        SingleChildScrollView(
+          child: page11,
+        ),
+        SingleChildScrollView(
+          child: page12,
+        ),
+        SingleChildScrollView(
+          child: page13,
+        ),
+        SingleChildScrollView(
+          child: page14,
+        ),
+        SingleChildScrollView(
+          child: page15,
+        ),
+        SingleChildScrollView(
+          child: page16,
+        ),
+        SingleChildScrollView(
+          child: page17,
+        ),
+        SingleChildScrollView(
+          child: page18,
+        ),
+        SingleChildScrollView(
+          child: page19,
+        ),
+        SingleChildScrollView(
+          child: page20,
+        ),
+        SingleChildScrollView(
+          child: page21,
+        ),
+        SingleChildScrollView(
+          child: page22,
+        ),
+        SingleChildScrollView(
+          child: page23,
+        ),
+        SingleChildScrollView(
+          child: page24,
+        ),
+        SingleChildScrollView(
+          child: page25,
+        ),
+        SingleChildScrollView(
+          child: page26,
+        ),
+        SingleChildScrollView(
+          child: page27,
+        ),
+        SingleChildScrollView(
+          child: page28,
+        ),
+        SingleChildScrollView(
+          child: page29,
+        ),
+        SingleChildScrollView(
+          child: page30,
+        ),
+        SingleChildScrollView(
+          child: page31,
+        ),
+        SingleChildScrollView(
+          child: page32,
+        ),
+        SingleChildScrollView(
+          child: page33,
+        ),
+        SingleChildScrollView(
+          child: page34,
+        ),
+        SingleChildScrollView(
+          child: page35,
+        ),
+        SingleChildScrollView(
+          child: page36,
+        ),
+      ],
+    ),
+  );
 }

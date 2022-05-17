@@ -1,210 +1,217 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:geloofsbelydenis/bMain.dart';
 import 'cMain.dart';
 import 'dMain.dart';
 import 'dbModel.dart';
-import 'dbHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'aDetailPage.dart';
 import 'package:share/share.dart';
+import 'dbQueries.dart';
 import 'eMain.dart';
 
-DBProvider dbProvider = DBProvider();
+DbQueries _dbQueries = DbQueries();
 
 class AMain extends StatefulWidget {
+  const AMain({Key? key}) : super(key: key);
+
   @override
   _AMainState createState() => _AMainState();
 }
 
 class _AMainState extends State<AMain> {
+  List<Chapter> chapters = List<Chapter>.empty();
 
-  List<Chapter> chapters = List<Chapter>();
-
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Chapter>>(
-        future: dbProvider.getTitleList('atexts'),
-        builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
-          if (snapshot.hasData) {
-            chapters = snapshot.data;
-            return showChapterList(chapters, context);
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+      future: _dbQueries.getTitleList('atexts'),
+      builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
+        if (snapshot.hasData) {
+          chapters = snapshot.data!;
+          return showChapterList(chapters, context);
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  _onShareLink(BuildContext context) async {
+    await Share.share(
+        'Geloofsbelydenis https://play.google.com/store/apps/details?id=org.armstrong.ika.geloofsbelydenis');
   }
 
   showChapterList(chapters, context) {
-    ListTile makeListTile(chapters, int index) =>
-        ListTile(
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: 20.0, vertical: 10.0),
-            // leading: Container(
-            //   padding: EdgeInsets.only(right: 12.0),
-            //   decoration: new BoxDecoration(
-            //       border: new Border(
-            //           right: new BorderSide(width: 1.0, color: Colors.white24))),
-            //   child: Icon(Icons.autorenew, color: Colors.white),
-            // ),
-            title: Text(
-              chapters[index].chap,
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            subtitle: Row(
-              children: <Widget>[
-                Icon(Icons.linear_scale, color: Colors.yellowAccent),
-                Flexible(
-                  child: RichText(
-                    overflow: TextOverflow.ellipsis,
-                    strutStyle: StrutStyle(fontSize: 12.0),
-                    text: TextSpan(
-                        style: TextStyle(color: Colors.white),
-                        text: " " + chapters[index].title),
-                  ),
+    ListTile makeListTile(chapters, int index) => ListTile(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          title: Text(
+            chapters[index].chap,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          subtitle: Row(
+            children: <Widget>[
+              const Icon(Icons.linear_scale, color: Colors.yellowAccent),
+              Flexible(
+                child: RichText(
+                  overflow: TextOverflow.ellipsis,
+                  strutStyle: const StrutStyle(fontSize: 12.0),
+                  text: TextSpan(
+                      style: const TextStyle(color: Colors.white),
+                      text: " " + chapters[index].title),
                 ),
-              ],
-            ),
-            trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-            onTap: () {
-              Future.delayed(const Duration(milliseconds: 200), () {
-                Navigator.push(context,
-                    CupertinoPageRoute(
-                        builder: (context) => ADetailPage(index)));
-              });
-            });
+              ),
+            ],
+          ),
+          trailing:
+              const Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          onTap: () {
+            Future.delayed(
+              const Duration(milliseconds: 200),
+              () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => ADetailPage(index),
+                  ),
+                );
+              },
+            );
+          },
+        );
 
-    Card makeCard(chapters, int index) =>
-        Card(
+    Card makeCard(chapters, int index) => Card(
           elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+          margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
           child: Container(
-            decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+            decoration: const BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
             child: makeListTile(chapters, index),
           ),
         );
 
-    final makeBody = Container(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: chapters == null ? 0 : chapters.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(chapters, index);
-        },
-      ),
+    final makeBody = ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: chapters == null ? 0 : chapters.length,
+      itemBuilder: (BuildContext context, int index) {
+        return makeCard(chapters, index);
+      },
     );
 
     final topAppBar = AppBar(
       elevation: 0.1,
-      backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-      title: Text('Geloofsbelydenis'),
-      // actions: <Widget>[
-      //  IconButton(
-      //    icon: Icon(Icons.list_sharp),
-      //    onPressed: () {},
-      //  )
-      // ],
+      backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+      title: const Text('Geloofsbelydenis'),
     );
 
     void _settingModalBottomSheet(context) {
       showModalBottomSheet(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10.0),
-                  topLeft: Radius.circular(10.0))),
-          context: context,
-          builder: (BuildContext bc) {
-            return Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(
-                        Icons.book_online_outlined,
-                        color: Colors.blueGrey,
-                      ),
-                      title: new Text('Ekumeniese belydenise'),
-                      onTap: () =>
-                      {
-                        Navigator.pop(context),
-                        Future.delayed(const Duration(milliseconds: 200),
-                                () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => BMain()));
-                            }),
-                      }),
-                  new ListTile(
-                      leading:
-                      new Icon(Icons.book_rounded, color: Colors.blueGrey),
-                      title: new Text('Heidelbergse Kategismus'),
-                      onTap: () =>
-                      {
-                        Navigator.pop(context),
-                        Future.delayed(const Duration(milliseconds: 200),
-                                () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => CMain()));
-                            }),
-                      }),
-                  new ListTile(
-                      leading:
-                      new Icon(Icons.book_online, color: Colors.blueGrey),
-                      title: new Text('Dordtse Leerreëls'),
-                      onTap: () =>
-                      {
-                        Navigator.pop(context),
-                        Future.delayed(const Duration(milliseconds: 200),
-                                () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => DMain()));
-                            }),
-                      }),
-                  new ListTile(
-                      leading:
-                      new Icon(Icons.bookmarks, color: Colors.blueGrey),
-                      title: new Text('Boekmerke'),
-                      onTap: () =>
-                      {
-                        Navigator.pop(context),
-                        Future.delayed(const Duration(milliseconds: 200),
-                                () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => EMain()));
-                            }),
-                      }),
-                  new ListTile(
-                      leading: new Icon(Icons.share, color: Colors.blueGrey),
-                      title: new Text('Deel hierdie Geloofsbelydenis'),
-                      onTap: () => {
-                      Navigator.pop(context),
-                      Share.share(
-                      'Geloofsbelydenis https://play.google.com/store/apps/details?id=org.armstrong.ika.geloofsbelydenis')
-                  }),
-                ],
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(10.0),
+            topLeft: Radius.circular(10.0),
+          ),
+        ),
+        context: context,
+        builder: (BuildContext bc) {
+          return Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(
+                  Icons.book_online_outlined,
+                  color: Colors.blueGrey,
+                ),
+                title: const Text('Ekumeniese belydenise'),
+                onTap: () => {
+                  Navigator.pop(context),
+                  Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => BMain(),
+                        ),
+                      );
+                    },
+                  ),
+                },
               ),
-            );
-          });
+              ListTile(
+                leading: const Icon(Icons.book_rounded, color: Colors.blueGrey),
+                title: const Text('Heidelbergse Kategismus'),
+                onTap: () => {
+                  Navigator.pop(context),
+                  Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => CMain(),
+                        ),
+                      );
+                    },
+                  ),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.book_online, color: Colors.blueGrey),
+                title: const Text('Dordtse Leerreëls'),
+                onTap: () => {
+                  Navigator.pop(context),
+                  Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => DMain(),
+                        ),
+                      );
+                    },
+                  ),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.bookmarks, color: Colors.blueGrey),
+                title: const Text('Boekmerke'),
+                onTap: () => {
+                  Navigator.pop(context),
+                  Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => EMain(),
+                        ),
+                      );
+                    },
+                  ),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.share, color: Colors.blueGrey),
+                title: const Text('Deel hierdie Geloofsbelydenis'),
+                onTap: () => {Navigator.pop(context), _onShareLink(context)},
+              ),
+            ],
+          );
+        },
+      );
     }
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+      backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
       appBar: topAppBar,
       body: makeBody,
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey,
         onPressed: () {
           _settingModalBottomSheet(context);
         },
-        child: new Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

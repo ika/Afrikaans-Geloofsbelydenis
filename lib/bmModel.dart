@@ -1,11 +1,11 @@
-class BMModel {
+class BmModel {
   int id;
   String title;
   String subtitle;
   String detail;
   String page;
 
-  BMModel({this.id, this.title, this.subtitle, this.detail, this.page});
+  BmModel({required this.id, required this.title, required this.subtitle, required this.detail, required this.page});
 
   // used when inserting data to the database
   Map<String, dynamic> toMap() {

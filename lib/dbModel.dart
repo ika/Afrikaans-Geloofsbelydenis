@@ -4,7 +4,7 @@ class Chapter {
   String title;
   String text;
 
-  Chapter({this.id, this.chap, this.title, this.text});
+  Chapter({required this.id, required this.chap, required this.title, required this.text});
 
   // used when inserting data to the database
   Map<String, dynamic> toMap() {

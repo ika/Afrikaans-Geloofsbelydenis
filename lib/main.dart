@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/cupertino.dart';
 import 'aMain.dart';
 
 void main() {
