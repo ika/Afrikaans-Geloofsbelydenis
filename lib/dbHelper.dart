@@ -13,10 +13,13 @@ import 'package:sqflite/sqflite.dart';
 class DBProvider {
   final String _dbName = 'gelb.db'; // change db name to update
 
-  static final DBProvider _dbProvider = DBProvider._createInstance();
-  static dynamic _database;
+  static DBProvider _dbProvider;
+  static Database _database;
+
+  DBProvider._createInstance();
 
   factory DBProvider() {
+    _dbProvider ??= DBProvider._createInstance();
     return _dbProvider;
   }
 
@@ -24,8 +27,6 @@ class DBProvider {
     _database ??= await initDB();
     return _database;
   }
-
-  DBProvider._createInstance();
 
   Future<Database> initDB() async {
     var databasesPath = await getDatabasesPath();

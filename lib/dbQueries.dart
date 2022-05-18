@@ -11,7 +11,6 @@ import 'dbHelper.dart';
 DBProvider dbProvider = DBProvider();
 
 class DbQueries {
-
   Future<List<Chapter>> getTitleList(String table) async {
     final db = await dbProvider.database;
 
@@ -25,7 +24,7 @@ class DbQueries {
           id: maps[i]['id'],
           chap: maps[i]['chap'],
           title: maps[i]['title'],
-          text: maps[i]['text'] = '',
+          //text: maps[i]['text'],
         );
       },
     );
@@ -42,7 +41,7 @@ class DbQueries {
       (i) {
         return Chapter(
           id: maps[i]['id'],
-          chap: maps[i]['chap'] = '',
+          //chap: maps[i]['chap'],
           title: maps[i]['title'],
           text: maps[i]['text'],
         );

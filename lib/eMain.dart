@@ -36,8 +36,10 @@ Future _showDialog(context) async {
             },
           ),
           TextButton(
-            child: const Text('Nee',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Nee',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onPressed: () {
               Navigator.of(context).pop(ConfirmAction.CANCEL);
             },
@@ -49,7 +51,7 @@ Future _showDialog(context) async {
 }
 
 class EMain extends StatefulWidget {
-  const EMain({Key? key}) : super(key: key);
+  const EMain({Key key}) : super(key: key);
 
   @override
   _EMainState createState() => _EMainState();
@@ -64,7 +66,7 @@ class _EMainState extends State<EMain> {
       future: _bmQueries.getBookMarkList(),
       builder: (context, AsyncSnapshot<List<BmModel>> snapshot) {
         if (snapshot.hasData) {
-          list = snapshot.data!;
+          list = snapshot.data;
           return showChapterList(list, context);
         } else {
           return const CircularProgressIndicator();

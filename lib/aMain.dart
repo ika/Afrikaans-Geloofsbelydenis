@@ -12,7 +12,7 @@ import 'eMain.dart';
 DbQueries _dbQueries = DbQueries();
 
 class AMain extends StatefulWidget {
-  const AMain({Key? key}) : super(key: key);
+  const AMain({Key key}) : super(key: key);
 
   @override
   _AMainState createState() => _AMainState();
@@ -27,7 +27,7 @@ class _AMainState extends State<AMain> {
       future: _dbQueries.getTitleList('atexts'),
       builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
         if (snapshot.hasData) {
-          chapters = snapshot.data!;
+          chapters = snapshot.data;
           return showChapterList(chapters, context);
         } else {
           return const CircularProgressIndicator();
@@ -130,7 +130,7 @@ class _AMainState extends State<AMain> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => BMain(),
+                          builder: (context) => const BMain(),
                         ),
                       );
                     },
@@ -148,7 +148,7 @@ class _AMainState extends State<AMain> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => CMain(),
+                          builder: (context) => const CMain(),
                         ),
                       );
                     },
@@ -166,7 +166,7 @@ class _AMainState extends State<AMain> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => DMain(),
+                          builder: (context) => const DMain(),
                         ),
                       );
                     },
@@ -184,7 +184,7 @@ class _AMainState extends State<AMain> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => EMain(),
+                          builder: (context) => const EMain(),
                         ),
                       );
                     },

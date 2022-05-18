@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-enum ConfirmAction { CANCEL, ACCEPT }
+enum ConfirmAction { cancel, accept, }
 
 String note = "";
 
-class BMDialog {
+class BmDialog {
   Future showBmDialog(context, arr) async {
     String txt = arr[1].toString();
 
@@ -61,13 +61,13 @@ class BMDialog {
             TextButton(
               child: const Text('Ja', style: TextStyle(fontWeight: FontWeight.bold)),
               onPressed: () {
-                Navigator.of(context).pop(ConfirmAction.ACCEPT);
+                Navigator.of(context).pop(ConfirmAction.accept);
               },
             ),
             TextButton(
-              child: const Text('Nee', style: const TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text('Nee', style: TextStyle(fontWeight: FontWeight.bold)),
               onPressed: () {
-                Navigator.of(context).pop(ConfirmAction.CANCEL);
+                Navigator.of(context).pop(ConfirmAction.cancel);
               },
             ),
           ],

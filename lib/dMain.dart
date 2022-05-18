@@ -8,7 +8,7 @@ import 'dbQueries.dart';
 DbQueries _dbQueries = DbQueries();
 
 class DMain extends StatefulWidget {
-  const DMain({Key? key}) : super(key: key);
+  const DMain({Key key}) : super(key: key);
 
   @override
   _DMainState createState() => _DMainState();
@@ -23,7 +23,7 @@ class _DMainState extends State<DMain> {
       future: _dbQueries.getTitleList('dtexts'),
       builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
         if (snapshot.hasData) {
-          chapters = snapshot.data!;
+          chapters = snapshot.data;
           return showChapterList(chapters, context);
         } else {
           return const CircularProgressIndicator();
