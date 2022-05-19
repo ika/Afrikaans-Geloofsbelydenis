@@ -47,7 +47,8 @@ class _AMainState extends State<AMain> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           title: Text(
             chapters[index].chap,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
           subtitle: Row(
             children: <Widget>[
@@ -63,8 +64,8 @@ class _AMainState extends State<AMain> {
               ),
             ],
           ),
-          trailing:
-              const Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          trailing: const Icon(Icons.keyboard_arrow_right,
+              color: Colors.white, size: 30.0),
           onTap: () {
             Future.delayed(
               const Duration(milliseconds: 200),
@@ -84,134 +85,144 @@ class _AMainState extends State<AMain> {
           elevation: 8.0,
           margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
           child: Container(
-            decoration: const BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+            decoration:
+                const BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
             child: makeListTile(chapters, index),
           ),
         );
 
-    final makeBody = ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: chapters == null ? 0 : chapters.length,
-      itemBuilder: (BuildContext context, int index) {
-        return makeCard(chapters, index);
-      },
-    );
+    // final makeBody = ListView.builder(
+    //   scrollDirection: Axis.vertical,
+    //   shrinkWrap: true,
+    //   itemCount: chapters == null ? 0 : chapters.length,
+    //   itemBuilder: (BuildContext context, int index) {
+    //     return makeCard(chapters, index);
+    //   },
+    // );
 
-    final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
-      title: const Text('Geloofsbelydenis'),
-    );
-
-    void _settingModalBottomSheet(context) {
-      showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10.0),
-            topLeft: Radius.circular(10.0),
-          ),
-        ),
-        context: context,
-        builder: (BuildContext bc) {
-          return Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(
-                  Icons.book_online_outlined,
-                  color: Colors.blueGrey,
-                ),
-                title: const Text('Ekumeniese belydenise'),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Future.delayed(
-                    const Duration(milliseconds: 200),
-                    () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const BMain(),
-                        ),
-                      );
-                    },
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.book_rounded, color: Colors.blueGrey),
-                title: const Text('Heidelbergse Kategismus'),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Future.delayed(
-                    const Duration(milliseconds: 200),
-                    () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const CMain(),
-                        ),
-                      );
-                    },
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.book_online, color: Colors.blueGrey),
-                title: const Text('Dordtse Leerreëls'),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Future.delayed(
-                    const Duration(milliseconds: 200),
-                    () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const DMain(),
-                        ),
-                      );
-                    },
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.bookmarks, color: Colors.blueGrey),
-                title: const Text('Boekmerke'),
-                onTap: () => {
-                  Navigator.pop(context),
-                  Future.delayed(
-                    const Duration(milliseconds: 200),
-                    () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const EMain(),
-                        ),
-                      );
-                    },
-                  ),
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.share, color: Colors.blueGrey),
-                title: const Text('Deel hierdie Geloofsbelydenis'),
-                onTap: () => {Navigator.pop(context), _onShareLink(context)},
-              ),
-            ],
-          );
-        },
-      );
-    }
+    // final topAppBar = AppBar(
+    //   elevation: 0.1,
+    //   backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+    //   title: const Text('Geloofsbelydenis'),
+    // );
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
-      appBar: topAppBar,
-      body: makeBody,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
-        onPressed: () {
-          _settingModalBottomSheet(context);
+      appBar: AppBar(
+        elevation: 0.1,
+        backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+        title: const Text('Geloofsbelydenis'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const SizedBox(
+              height: 100.0,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(64, 75, 96, .9),
+                ),
+                child: Text(
+                  'Index',
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontFamily: 'Raleway-Regular',
+                    fontSize: 25,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.book_online_outlined,
+                color: Colors.blueGrey,
+              ),
+              title: const Text('Ekumeniese belydenise'),
+              onTap: () => {
+                Navigator.pop(context),
+                Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const BMain(),
+                      ),
+                    );
+                  },
+                ),
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.book_rounded, color: Colors.blueGrey),
+              title: const Text('Heidelbergse Kategismus'),
+              onTap: () => {
+                Navigator.pop(context),
+                Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const CMain(),
+                      ),
+                    );
+                  },
+                ),
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.book_online, color: Colors.blueGrey),
+              title: const Text('Dordtse Leerreëls'),
+              onTap: () => {
+                Navigator.pop(context),
+                Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const DMain(),
+                      ),
+                    );
+                  },
+                ),
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.bookmarks, color: Colors.blueGrey),
+              title: const Text('Boekmerke'),
+              onTap: () => {
+                Navigator.pop(context),
+                Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const EMain(),
+                      ),
+                    );
+                  },
+                ),
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.share, color: Colors.blueGrey),
+              title: const Text('Deel hierdie Geloofsbelydenis'),
+              onTap: () => {Navigator.pop(context), _onShareLink(context)},
+            ),
+          ],
+        ),
+      ),
+      body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: chapters == null ? 0 : chapters.length,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard(chapters, index);
         },
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
