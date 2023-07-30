@@ -47,16 +47,16 @@ showChapters(chapters, index, context) {
 
   final html = Style(
     backgroundColor: Colors.white30,
-    padding: const EdgeInsets.all(15.0),
+    padding: HtmlPaddings.all(15.0), //EdgeInsets.all(15.0),
     fontFamily: 'Raleway-Regular',
-    fontSize: const FontSize(16.0),
+    fontSize: FontSize(16.0),
   );
 
   final h2 = Style(
-    fontSize: const FontSize(18.0),
+    fontSize: FontSize(18.0),
   );
   final h3 = Style(
-    fontSize: const FontSize(16.0),
+    fontSize: FontSize(16.0),
   );
 
   final page0 = Html(
