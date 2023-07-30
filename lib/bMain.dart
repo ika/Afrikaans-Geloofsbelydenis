@@ -7,13 +7,13 @@ import 'dbQueries.dart';
 DbQueries _dbQueries = DbQueries();
 
 class BMain extends StatefulWidget {
-  const BMain({Key key}) : super(key: key);
+  const BMain({Key? key}) : super(key: key);
 
   @override
-  _BMainState createState() => _BMainState();
+  BMainState createState() => BMainState();
 }
 
-class _BMainState extends State<BMain> {
+class BMainState extends State<BMain> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override
@@ -22,7 +22,7 @@ class _BMainState extends State<BMain> {
       future: _dbQueries.getTitleList('btexts'),
       builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
         if (snapshot.hasData) {
-          chapters = snapshot.data;
+          chapters = snapshot.data!;
           return showChapterList(chapters, context);
         } else {
           return const CircularProgressIndicator();
@@ -48,7 +48,7 @@ class _BMainState extends State<BMain> {
                   strutStyle: const StrutStyle(fontSize: 12.0),
                   text: TextSpan(
                       style: const TextStyle(color: Colors.white),
-                      text: " " + chapters[index].title),
+                      text: " ${chapters[index].title}"),
                 ),
               ),
             ],
@@ -81,15 +81,13 @@ class _BMainState extends State<BMain> {
           ),
         );
 
-    final makeBody = Container(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: chapters == null ? 0 : chapters.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(chapters, index);
-        },
-      ),
+    final makeBody = ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: chapters == null ? 0 : chapters.length,
+      itemBuilder: (BuildContext context, int index) {
+        return makeCard(chapters, index);
+      },
     );
 
     final topAppBar = AppBar(

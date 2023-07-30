@@ -11,15 +11,15 @@ BmQueries _bmQueries = BmQueries();
 int index = 0;
 
 class CDetailPage extends StatefulWidget {
-  CDetailPage(int indx, {Key key}) : super(key: key) {
+  CDetailPage(int indx, {Key? key}) : super(key: key) {
     index = indx;
   }
 
   @override
-  _CDetailPageState createState() => _CDetailPageState();
+  CDetailPageState createState() => CDetailPageState();
 }
 
-class _CDetailPageState extends State<CDetailPage> {
+class CDetailPageState extends State<CDetailPage> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override
@@ -28,7 +28,7 @@ class _CDetailPageState extends State<CDetailPage> {
       future: _dbQueries.getChapters('ctexts'),
       builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
         if (snapshot.hasData) {
-          chapters = snapshot.data;
+          chapters = snapshot.data!;
           return showChapters(chapters, index, context);
         } else {
           return const CircularProgressIndicator();
@@ -331,11 +331,11 @@ showChapters(chapters, index, context) {
               color: Colors.yellow,
             ),
             onPressed: () {
-              int pg = pageController.page.toInt();
+              int pg = pageController.page!.toInt();
               int sp = pg + 1;
 
               var arr = List.filled(2, '');
-              arr[0] = heading + " " + chap + " " + sp.toString();
+              arr[0] = "$heading $chap $sp";
               arr[1] = chapters[pg].title;
 
               BmDialog().showBmDialog(context, arr).then(

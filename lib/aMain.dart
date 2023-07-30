@@ -12,13 +12,13 @@ import 'eMain.dart';
 DbQueries _dbQueries = DbQueries();
 
 class AMain extends StatefulWidget {
-  const AMain({Key key}) : super(key: key);
+  const AMain({Key? key}) : super(key: key);
 
   @override
-  _AMainState createState() => _AMainState();
+  AMainState createState() => AMainState();
 }
 
-class _AMainState extends State<AMain> {
+class AMainState extends State<AMain> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override
@@ -27,7 +27,7 @@ class _AMainState extends State<AMain> {
       future: _dbQueries.getTitleList('atexts'),
       builder: (context, AsyncSnapshot<List<Chapter>> snapshot) {
         if (snapshot.hasData) {
-          chapters = snapshot.data;
+          chapters = snapshot.data!;
           return showChapterList(chapters, context);
         } else {
           return const CircularProgressIndicator();
@@ -59,7 +59,7 @@ class _AMainState extends State<AMain> {
                   strutStyle: const StrutStyle(fontSize: 12.0),
                   text: TextSpan(
                       style: const TextStyle(color: Colors.white),
-                      text: " " + chapters[index].title),
+                      text: " ${chapters[index].title}"),
                 ),
               ),
             ],

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -13,19 +12,19 @@ import 'package:sqflite/sqflite.dart';
 class DBProvider {
   final String _dbName = 'gelb.db'; // change db name to update
 
-  static DBProvider _dbProvider;
-  static Database _database;
+   static DBProvider? _dbProvider;
+  static Database? _database;
 
   DBProvider._createInstance();
 
   factory DBProvider() {
     _dbProvider ??= DBProvider._createInstance();
-    return _dbProvider;
+    return _dbProvider!;
   }
 
   Future<Database> get database async {
     _database ??= await initDB();
-    return _database;
+    return _database!;
   }
 
   Future<Database> initDB() async {
@@ -50,6 +49,6 @@ class DBProvider {
   }
 
   Future close() async {
-    return _database.close();
+    return _database!.close();
   }
 }

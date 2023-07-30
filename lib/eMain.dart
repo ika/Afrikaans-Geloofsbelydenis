@@ -51,13 +51,13 @@ Future _showDialog(context) async {
 }
 
 class EMain extends StatefulWidget {
-  const EMain({Key key}) : super(key: key);
+  const EMain({Key? key}) : super(key: key);
 
   @override
-  _EMainState createState() => _EMainState();
+  EMainState createState() => EMainState();
 }
 
-class _EMainState extends State<EMain> {
+class EMainState extends State<EMain> {
   List<BmModel> list = List<BmModel>.empty();
 
   @override
@@ -66,7 +66,7 @@ class _EMainState extends State<EMain> {
       future: _bmQueries.getBookMarkList(),
       builder: (context, AsyncSnapshot<List<BmModel>> snapshot) {
         if (snapshot.hasData) {
-          list = snapshot.data;
+          list = snapshot.data!;
           return showChapterList(list, context);
         } else {
           return const CircularProgressIndicator();
@@ -93,7 +93,7 @@ class _EMainState extends State<EMain> {
                   strutStyle: const StrutStyle(fontSize: 12.0),
                   text: TextSpan(
                       style: const TextStyle(color: Colors.white),
-                      text: " " + list[index].subtitle),
+                      text: " ${list[index].subtitle}"),
                 ),
               ),
             ],

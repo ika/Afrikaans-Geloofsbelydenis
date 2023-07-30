@@ -1,10 +1,10 @@
 class Chapter {
-  int id;
-  String chap;
+  int? id;
+  String? chap;
   String title;
-  String text;
+  String? text;
 
-  Chapter({this.id, this.chap, this.title, this.text});
+  Chapter({this.id, this.chap, required this.title, this.text});
 
   // used when inserting data to the database
   Map<String, dynamic> toMap() {
