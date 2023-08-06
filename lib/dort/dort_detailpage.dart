@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'bmModel.dart';
-import 'bmQueries.dart';
-import 'dbModel.dart';
-import 'bmDialog.dart';
-import 'dbQueries.dart';
+import '../bm/bm_model.dart';
+import '../bm/bm_queries.dart';
+import '../main/db_model.dart';
+import '../bm/bm_dialog.dart';
+import '../main/db_queries.dart';
 
 DbQueries _dbQueries = DbQueries();
 BmQueries _bmQueries = BmQueries();

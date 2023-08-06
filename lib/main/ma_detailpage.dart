@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:geloofsbelydenis/bmDialog.dart';
-import 'bmModel.dart';
-import 'bmQueries.dart';
-import 'dbModel.dart';
-import 'dbQueries.dart';
+import 'package:geloofsbelydenis/bm/bm_dialog.dart';
+import '../bm/bm_model.dart';
+import '../bm/bm_queries.dart';
+import 'db_model.dart';
+import 'db_queries.dart';
 
 DbQueries _dbQueries = DbQueries();
 BmQueries _bmQueries = BmQueries();
 int index = 0;
 
-class ADetailPage extends StatefulWidget {
-  ADetailPage(int indx, {Key? key}) : super(key: key) {
+class MainDetailPage extends StatefulWidget {
+  MainDetailPage(int indx, {Key? key}) : super(key: key) {
     index = indx;
   }
 
   @override
-  ADetailPageState createState() => ADetailPageState();
+  MainDetailPageState createState() => MainDetailPageState();
 }
 
-class ADetailPageState extends State<ADetailPage> {
+class MainDetailPageState extends State<MainDetailPage> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   String table = "atexts";

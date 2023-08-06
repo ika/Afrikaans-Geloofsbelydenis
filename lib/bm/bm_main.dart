@@ -1,63 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:geloofsbelydenis/bmModel.dart';
-import 'aDetailPage.dart';
-import 'bDetailPage.dart';
-import 'bmQueries.dart';
-import 'cDetailPage.dart';
-import 'dDetailPage.dart';
+import 'package:geloofsbelydenis/bm/bm_model.dart';
+import '../main/ma_detailpage.dart';
+import '../cre/cre_detailpage.dart';
+import 'bm_queries.dart';
+import '../cat/cat_detailpage.dart';
+import '../dort/dort_detailpage.dart';
 import 'package:flutter/cupertino.dart';
 
 // bookmarks
 
-enum ConfirmAction { CANCEL, ACCEPT }
-
 BmQueries _bmQueries = BmQueries();
 
-Future _showDialog(context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Vee boekmerk uit?'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const [
-              Text('Is jy seker jy wil hierdie boekmerk uitvee?'),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            child:
-                const Text('Ja', style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.ACCEPT);
-            },
-          ),
-          TextButton(
-            child: const Text(
-              'Nee',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.CANCEL);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-class EMain extends StatefulWidget {
-  const EMain({Key? key}) : super(key: key);
+class BkMarkMainPage extends StatefulWidget {
+  const BkMarkMainPage({Key? key}) : super(key: key);
 
   @override
-  EMainState createState() => EMainState();
+  BkMarkMainPageState createState() => BkMarkMainPageState();
 }
 
-class EMainState extends State<EMain> {
+class BkMarkMainPageState extends State<BkMarkMainPage> {
   List<BmModel> list = List<BmModel>.empty();
 
   @override
@@ -72,6 +33,29 @@ class EMainState extends State<EMain> {
           return const CircularProgressIndicator();
         }
       },
+    );
+  }
+
+    Future confirmDialog() async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Vee boekmerk uit?'),
+        content: const Text('Is jy seker jy wil hierdie boekmerk uitvee?'),
+        actions: [
+          TextButton(
+            child:
+                const Text('NEE', style: TextStyle(fontWeight: FontWeight.bold)),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: const Text('JA',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
     );
   }
 
@@ -108,7 +92,7 @@ class EMainState extends State<EMain> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => ADetailPage(goto))).then(
+                          builder: (context) => MainDetailPage(goto))).then(
                     (value) {
                       setState(() {});
                     },
@@ -121,7 +105,7 @@ class EMainState extends State<EMain> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => BDetailPage(goto))).then(
+                          builder: (context) => CreedsDetailPage(goto))).then(
                     (value) {
                       setState(() {});
                     },
@@ -134,7 +118,7 @@ class EMainState extends State<EMain> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => CDetailPage(goto))).then(
+                          builder: (context) => CatDetailPage(goto))).then(
                     (value) {
                       setState(() {});
                     },
@@ -157,9 +141,9 @@ class EMainState extends State<EMain> {
             }
           },
           onLongPress: () {
-            _showDialog(context).then(
+            confirmDialog().then(
               (value) {
-                if (value == ConfirmAction.ACCEPT) {
+                if (value) {
                   _bmQueries.deleteBookMark(list[index].id).then(
                     (value) {
                       setState(

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'dDetailPage.dart';
-import 'dbModel.dart';
+import 'dort_detailpage.dart';
+import '../main/db_model.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'dbQueries.dart';
+import '../main/db_queries.dart';
 
 DbQueries _dbQueries = DbQueries();
 
-class DMain extends StatefulWidget {
-  const DMain({Key? key}) : super(key: key);
+class DortMainPage extends StatefulWidget {
+  const DortMainPage({Key? key}) : super(key: key);
 
   @override
-  DMainState createState() => DMainState();
+  DortMainPageState createState() => DortMainPageState();
 }
 
-class DMainState extends State<DMain> {
+class DortMainPageState extends State<DortMainPage> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'cDetailPage.dart';
-import 'dbModel.dart';
+import 'cat_detailpage.dart';
+import '../main/db_model.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'dbQueries.dart';
+import '../main/db_queries.dart';
 
 DbQueries _dbQueries = DbQueries();
 
-class CMain extends StatefulWidget {
-  const CMain({Key? key}) : super(key: key);
+class CatMainPage extends StatefulWidget {
+  const CatMainPage({Key? key}) : super(key: key);
 
   @override
-  CMainState createState() => CMainState();
+  CatMainPageState createState() => CatMainPageState();
 }
 
-class CMainState extends State<CMain> {
+class CatMainPageState extends State<CatMainPage> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override
@@ -63,7 +63,7 @@ class CMainState extends State<CMain> {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) => CDetailPage(index),
+                    builder: (context) => CatDetailPage(index),
                   ),
                 );
               },

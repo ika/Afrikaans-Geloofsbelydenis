@@ -15,8 +15,8 @@ class BmDialog {
       txt = txt.substring(0, 35);
     }
 
-    TextEditingController _controller = TextEditingController();
-    note = _controller.text = txt;
+    TextEditingController textEditingController = TextEditingController();
+    note = textEditingController.text = txt;
 
     return showDialog<void>(
       context: context,
@@ -40,7 +40,7 @@ class BmDialog {
                       maxLines: null,
                       autofocus: true,
                       maxLength: 50,
-                      controller: _controller,
+                      controller: textEditingController,
                       decoration: const InputDecoration(
                         labelText: 'Tik teks in',
                         labelStyle: TextStyle(

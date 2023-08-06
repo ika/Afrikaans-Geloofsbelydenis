@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:geloofsbelydenis/bMain.dart';
-import 'cMain.dart';
-import 'dMain.dart';
-import 'dbModel.dart';
+import 'package:geloofsbelydenis/cre/cre_main.dart';
+import 'package:geloofsbelydenis/main/ma_detailpage.dart';
+import '../cat/cat_main.dart';
+import '../dort/dort_main.dart';
+import 'db_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'aDetailPage.dart';
 import 'package:share/share.dart';
-import 'dbQueries.dart';
-import 'eMain.dart';
+import 'db_queries.dart';
+import '../bm/bm_main.dart';
 
 DbQueries _dbQueries = DbQueries();
 
-class AMain extends StatefulWidget {
-  const AMain({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  AMainState createState() => AMainState();
+  MainPageState createState() => MainPageState();
 }
 
-class AMainState extends State<AMain> {
+class MainPageState extends State<MainPage> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override
@@ -73,7 +73,7 @@ class AMainState extends State<AMain> {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) => ADetailPage(index),
+                    builder: (context) => MainDetailPage(index),
                   ),
                 );
               },
@@ -147,7 +147,7 @@ class AMainState extends State<AMain> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const BMain(),
+                        builder: (context) => const CreedsMainPage(),
                       ),
                     );
                   },
@@ -165,7 +165,7 @@ class AMainState extends State<AMain> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const CMain(),
+                        builder: (context) => const CatMainPage(),
                       ),
                     );
                   },
@@ -183,7 +183,7 @@ class AMainState extends State<AMain> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const DMain(),
+                        builder: (context) => const DortMainPage(),
                       ),
                     );
                   },
@@ -201,7 +201,7 @@ class AMainState extends State<AMain> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const EMain(),
+                        builder: (context) => const BkMarkMainPage(),
                       ),
                     );
                   },

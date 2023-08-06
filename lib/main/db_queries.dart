@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'dbModel.dart';
-import 'dbHelper.dart';
+import 'db_model.dart';
+import 'db_helper.dart';
 
 // atexts geloofbelydenis
 // btexts Ecumenical creeds

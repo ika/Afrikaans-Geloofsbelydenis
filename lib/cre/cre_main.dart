@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'bDetailPage.dart';
-import 'dbModel.dart';
+import 'cre_detailpage.dart';
+import '../main/db_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'dbQueries.dart';
+import '../main/db_queries.dart';
 
 DbQueries _dbQueries = DbQueries();
 
-class BMain extends StatefulWidget {
-  const BMain({Key? key}) : super(key: key);
+class CreedsMainPage extends StatefulWidget {
+  const CreedsMainPage({Key? key}) : super(key: key);
 
   @override
-  BMainState createState() => BMainState();
+  CreedsMainState createState() => CreedsMainState();
 }
 
-class BMainState extends State<BMain> {
+class CreedsMainState extends State<CreedsMainPage> {
   List<Chapter> chapters = List<Chapter>.empty();
 
   @override
@@ -62,7 +62,7 @@ class BMainState extends State<BMain> {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) => BDetailPage(index),
+                    builder: (context) => CreedsDetailPage(index),
                   ),
                 );
               },

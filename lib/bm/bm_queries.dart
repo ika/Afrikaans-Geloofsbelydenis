@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 
-import 'bmModel.dart';
-import 'dbHelper.dart';
+import 'bm_model.dart';
+import '../main/db_helper.dart';
 
 DBProvider dbProvider = DBProvider();
 
