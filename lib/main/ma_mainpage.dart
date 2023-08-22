@@ -134,8 +134,26 @@ class MainPageState extends State<MainPage> {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
+              title: const Text('Boekmerke'),
+              onTap: () => {
+                Navigator.pop(context),
+                Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const BkMarkMainPage(),
+                      ),
+                    );
+                  },
+                ),
+              },
+            ),
+            ListTile(
               leading: const Icon(
-                Icons.book_online_outlined,
+                Icons.keyboard_double_arrow_right,
                 color: Colors.blueGrey,
               ),
               title: const Text('Ekumeniese belydenise'),
@@ -155,7 +173,7 @@ class MainPageState extends State<MainPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.book_rounded, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
               title: const Text('Heidelbergse Kategismus'),
               onTap: () => {
                 Navigator.pop(context),
@@ -173,7 +191,7 @@ class MainPageState extends State<MainPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.book_online, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
               title: const Text('Dordtse Leerreëls'),
               onTap: () => {
                 Navigator.pop(context),
@@ -191,25 +209,7 @@ class MainPageState extends State<MainPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.bookmarks, color: Colors.blueGrey),
-              title: const Text('Boekmerke'),
-              onTap: () => {
-                Navigator.pop(context),
-                Future.delayed(
-                  const Duration(milliseconds: 200),
-                  () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => const BkMarkMainPage(),
-                      ),
-                    );
-                  },
-                ),
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.share, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
               title: const Text('Deel hierdie Geloofsbelydenis'),
               onTap: () => {Navigator.pop(context), _onShareLink(context)},
             ),
