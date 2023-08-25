@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:geloofsbelydenis/bm/bm_dialog.dart';
-import '../bm/bm_model.dart';
-import '../bm/bm_queries.dart';
 import '../main/db_model.dart';
 import '../main/db_queries.dart';
 
 DbQueries _dbQueries = DbQueries();
-BmQueries _bmQueries = BmQueries();
 int index = 0;
 
 class CreedsDetailPage extends StatefulWidget {
@@ -95,23 +92,18 @@ showChapters(chapters, index, context) {
               int pg = pageController.page!.toInt();
               int sp = pg + 1;
 
-              var arr = List.filled(2, '');
-              arr[0] = "$heading $sp";
-              arr[1] = chapters[pg].title;
+              // var arr = List.filled(2, '');
+              // arr[0] = "$heading $sp";
+              // arr[1] = chapters[pg].title;
 
-              BmDialog().showBmDialog(context, arr).then(
-                (value) {
-                  if (value == ConfirmAction.accept) {
-                    final model = BmModel(
-                      title: arr[0].toString(),
-                      subtitle: note,
-                      detail: "2",
-                      page: pg.toString(),
-                    );
-                    _bmQueries.saveBookMark(model);
-                  }
-                },
-              );
+              var arr = List.filled(4, '');
+
+              arr[0] = "$heading $sp"; // title
+              arr[1] = chapters[pg].title;
+              arr[2] = '2'; // detail
+              arr[3] = "$pg"; // page
+
+              BmDialog().bMWrapper(context, arr);
             },
           ),
         ],

@@ -5,7 +5,6 @@ import '../cre/cre_detailpage.dart';
 import 'bm_queries.dart';
 import '../cat/cat_detailpage.dart';
 import '../dort/dort_detailpage.dart';
-import 'package:flutter/cupertino.dart';
 
 // bookmarks
 
@@ -36,7 +35,7 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
     );
   }
 
-    Future confirmDialog() async {
+  Future confirmDialog() async {
     return await showDialog(
       context: context,
       barrierDismissible: false,
@@ -45,13 +44,13 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
         content: const Text('Is jy seker jy wil hierdie boekmerk uitvee?'),
         actions: [
           TextButton(
-            child:
-                const Text('NEE', style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text('NEE',
+                style: TextStyle(fontWeight: FontWeight.bold)),
             onPressed: () => Navigator.of(context).pop(false),
           ),
           TextButton(
-            child: const Text('JA',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            child:
+                const Text('JA', style: TextStyle(fontWeight: FontWeight.bold)),
             onPressed: () => Navigator.of(context).pop(true),
           ),
         ],
@@ -91,7 +90,7 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
                 {
                   Navigator.push(
                       context,
-                      CupertinoPageRoute(
+                      MaterialPageRoute(
                           builder: (context) => MainDetailPage(goto))).then(
                     (value) {
                       setState(() {});
@@ -104,7 +103,7 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
                 {
                   Navigator.push(
                       context,
-                      CupertinoPageRoute(
+                      MaterialPageRoute(
                           builder: (context) => CreedsDetailPage(goto))).then(
                     (value) {
                       setState(() {});
@@ -117,7 +116,7 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
                 {
                   Navigator.push(
                       context,
-                      CupertinoPageRoute(
+                      MaterialPageRoute(
                           builder: (context) => CatDetailPage(goto))).then(
                     (value) {
                       setState(() {});
@@ -130,7 +129,7 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
                 {
                   Navigator.push(
                       context,
-                      CupertinoPageRoute(
+                      MaterialPageRoute(
                           builder: (context) => DDetailPage(goto))).then(
                     (value) {
                       setState(() {});
@@ -140,55 +139,130 @@ class BkMarkMainPageState extends State<BkMarkMainPage> {
                 break;
             }
           },
-          onLongPress: () {
-            confirmDialog().then(
-              (value) {
-                if (value) {
-                  _bmQueries.deleteBookMark(list[index].id).then(
-                    (value) {
-                      setState(
-                        () {
-                          list.removeAt(index);
-                        },
-                      );
-                    },
-                  );
-                }
-              },
-            );
-          },
+          // onLongPress: () {
+          //   confirmDialog().then(
+          //     (value) {
+          //       if (value) {
+          //         _bmQueries.deleteBookMark(list[index].id).then(
+          //           (value) {
+          //             setState(
+          //               () {
+          //                 list.removeAt(index);
+          //               },
+          //             );
+          //           },
+          //         );
+          //       }
+          //     },
+          //   );
+          // },
         );
 
-    Card makeCard(list, int index) => Card(
-          elevation: 8.0,
-          margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(64, 75, 96, .9),
-            ),
-            child: makeListTile(list, index),
-          ),
-        );
+    // Card makeCard(list, int index) => Card(
+    //       elevation: 8.0,
+    //       margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+    //       child: Container(
+    //         decoration: const BoxDecoration(
+    //           color: Color.fromRGBO(64, 75, 96, .9),
+    //         ),
+    //         child: makeListTile(list, index),
+    //       ),
+    //     );
 
-    final makeBody = ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: list == null ? 0 : list.length,
-      itemBuilder: (BuildContext context, int index) {
-        return makeCard(list, index);
-      },
-    );
+    // final makeBody = ListView.builder(
+    //   scrollDirection: Axis.vertical,
+    //   shrinkWrap: true,
+    //   itemCount: list == null ? 0 : list.length,
+    //   itemBuilder: (BuildContext context, int index) {
+    //     return GestureDetector(
+    //       onHorizontalDragEnd: (DragEndDetails details) {
+    //         if (details.primaryVelocity! > 0 || details.primaryVelocity! < 0) {
+    //           confirmDialog().then(
+    //             (value) {
+    //               if (value) {
+    //                 _bmQueries.deleteBookMark(list[index].id).then(
+    //                   (value) {
+    //                     setState(
+    //                       () {
+    //                         list.removeAt(index);
+    //                       },
+    //                     );
+    //                   },
+    //                 );
+    //               }
+    //             },
+    //           );
+    //         }
+    //       },
+    //       child: Card(
+    //         elevation: 8.0,
+    //         margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+    //         child: Container(
+    //           decoration: const BoxDecoration(
+    //             color: Color.fromRGBO(64, 75, 96, .9),
+    //           ),
+    //           child: makeListTile(list, index),
+    //         ),
+    //       ),
+    //     );
+    //     //return makeCard(list, index);
+    //   },
+    // );
 
-    final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
-      title: const Text('Boekmerke'),
-    );
+    // final topAppBar = AppBar(
+    //   elevation: 0.1,
+    //   backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+    //   title: const Text('Boekmerke'),
+    // );
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
-      appBar: topAppBar,
-      body: makeBody,
+      appBar: AppBar(
+        elevation: 0.1,
+        backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+        title: const Text('Boekmerke'),
+      ),
+      body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: list == null ? 0 : list.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onHorizontalDragEnd: (DragEndDetails details) {
+              if (details.primaryVelocity! > 0 ||
+                  details.primaryVelocity! < 0) {
+                confirmDialog().then(
+                  (value) {
+                    if (value) {
+                      _bmQueries.deleteBookMark(list[index].id).then(
+                        (value) {
+                          setState(
+                            () {
+                              list.removeAt(index);
+                            },
+                          );
+                        },
+                      );
+                    }
+                  },
+                );
+              }
+            },
+            child: Card(
+              elevation: 8.0,
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(64, 75, 96, .9),
+                ),
+                child: makeListTile(list, index),
+              ),
+            ),
+          );
+          //return makeCard(list, index);
+        },
+      ),
     );
   }
 }

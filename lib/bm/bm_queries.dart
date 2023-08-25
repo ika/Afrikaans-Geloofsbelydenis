@@ -38,4 +38,14 @@ class BmQueries {
       );
     });
   }
+
+  Future<int> getBookMarkExists(int detail, int num) async {
+    final db = await dbProvider.database;
+
+    var cnt = Sqflite.firstIntValue(
+      await db
+          .rawQuery('''SELECT MAX(id) FROM $_bMarks WHERE detail=? AND page=?''', [detail, num]),
+    );
+    return cnt ?? 0;
+  }
 }

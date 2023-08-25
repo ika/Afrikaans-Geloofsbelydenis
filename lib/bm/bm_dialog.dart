@@ -1,77 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:geloofsbelydenis/bm/bm_model.dart';
+import 'package:geloofsbelydenis/bm/bm_queries.dart';
 
-enum ConfirmAction { cancel, accept, }
-
-String note = "";
+BmQueries _bmQueries = BmQueries();
 
 class BmDialog {
-  Future showBmDialog(context, arr) async {
-    String txt = arr[1].toString();
+  SnackBar bmExistsSnackBar = const SnackBar(
+    content: Text('Die boekmerk reeds bestaan.'),
+  );
 
-    // txt = txt.replaceAll(RegExp(r'[0-9]+'), '');
-    // txt = txt.replaceAll(RegExp(r'[\(\)\-]+'), '');
+  SnackBar bmAddedSnackBar = const SnackBar(
+    content: Text('Boekmerk bygevoeg.'),
+  );
 
-    if (txt.length > 35) {
-      txt = txt.substring(0, 35);
-    }
-
-    TextEditingController textEditingController = TextEditingController();
-    note = textEditingController.text = txt;
-
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Boekmerk?'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                  arr[0].toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: SizedBox(
-                    width: 100,
-                    child: TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      autofocus: true,
-                      maxLength: 50,
-                      controller: textEditingController,
-                      decoration: const InputDecoration(
-                        labelText: 'Tik teks in',
-                        labelStyle: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onChanged: (value) {
-                        note = value;
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+  Future confirmDialog(BuildContext context, arr) async {
+    return showDialog(
+      builder: (context) => AlertDialog(
+        title: Text(arr[0]), // title
+        content: Text(arr[1]), // subtitle
+        actions: [
+          TextButton(
+            child: const Text('NEE',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            onPressed: () => Navigator.of(context).pop(false),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Ja', style: TextStyle(fontWeight: FontWeight.bold)),
-              onPressed: () {
-                Navigator.of(context).pop(ConfirmAction.accept);
-              },
-            ),
-            TextButton(
-              child: const Text('Nee', style: TextStyle(fontWeight: FontWeight.bold)),
-              onPressed: () {
-                Navigator.of(context).pop(ConfirmAction.cancel);
-              },
-            ),
-          ],
-        );
+          TextButton(
+            child:
+                const Text('JA', style: TextStyle(fontWeight: FontWeight.bold)),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+      context: context,
+    );
+  }
+
+  void bMWrapper(BuildContext context, arr) {
+    _bmQueries.getBookMarkExists(int.parse(arr[2]), int.parse(arr[3])).then(
+      (value) {
+        if (value < 1) {
+          confirmDialog(context, arr).then(
+            (value) {
+              if (value) {
+                final model = BmModel(
+                    title: arr[0].toString(),
+                    subtitle: arr[1].toString(),
+                    detail: arr[2],
+                    page: arr[3]);
+                _bmQueries.saveBookMark(model).then((value) {
+                  ScaffoldMessenger.of(context).showSnackBar(bmAddedSnackBar);
+                });
+              }
+            },
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(bmExistsSnackBar);
+        }
       },
     );
   }

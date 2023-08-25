@@ -48,4 +48,17 @@ class DbQueries {
       },
     );
   }
+
+  //   Future<List<Chapter>> getChapterInfo(int id) async {
+  //   final db = await dbProvider.database;
+
+  //   var res = await db
+  //       .rawQuery('''SELECT chap,title FROM $table WHERE id=?''', [id]);
+
+  //   List<Chapter> list = res.isNotEmpty
+  //       ? res.map((tableName) => Chapter.fromJson(tableName)).toList()
+  //       : [];
+
+  //   return list;
+  // }
 }
