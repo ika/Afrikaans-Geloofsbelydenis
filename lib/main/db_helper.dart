@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -11,7 +12,7 @@ import 'package:sqflite/sqflite.dart';
 class DBProvider {
   final String _dbName = 'gelb.db'; // change db name to update
 
-   static DBProvider? _dbProvider;
+  static DBProvider? _dbProvider;
   static Database? _database;
 
   DBProvider._createInstance();

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geloofsbelydenis/bm/bm_model.dart';
-import '../main/ma_detailpage.dart';
-import '../cre/cre_detailpage.dart';
-import 'bm_queries.dart';
+
 import '../cat/cat_detailpage.dart';
+import '../cre/cre_detailpage.dart';
 import '../dort/dort_detailpage.dart';
+import '../main/ma_detailpage.dart';
+import 'bm_queries.dart';
 
 // bookmarks
 

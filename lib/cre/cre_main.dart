@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'cre_detailpage.dart';
-import '../main/db_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../main/db_model.dart';
 import '../main/db_queries.dart';
+import 'cre_detailpage.dart';
 
 DbQueries _dbQueries = DbQueries();
 
@@ -37,7 +38,8 @@ class CreedsMainState extends State<CreedsMainPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           title: Text(
             chapters[index].chap,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
           subtitle: Row(
             children: [
@@ -53,8 +55,8 @@ class CreedsMainState extends State<CreedsMainPage> {
               ),
             ],
           ),
-          trailing:
-              const Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          trailing: const Icon(Icons.keyboard_arrow_right,
+              color: Colors.white, size: 30.0),
           onTap: () {
             Future.delayed(
               const Duration(milliseconds: 200),

@@ -1,8 +1,9 @@
 import 'dart:async';
+
 import 'package:sqflite/sqflite.dart';
 
-import 'bm_model.dart';
 import '../main/db_helper.dart';
+import 'bm_model.dart';
 
 DBProvider dbProvider = DBProvider();
 
@@ -28,23 +29,30 @@ class BmQueries {
     final List<Map<String, dynamic>> maps = await db.rawQuery(
         "SELECT id, title, subtitle, detail, page FROM $_bMarks ORDER BY id DESC");
 
-    return List.generate(maps.length, (i) {
-      return BmModel(
-        id: maps[i]['id'],
-        title: maps[i]['title'],
-        subtitle: maps[i]['subtitle'],
-        detail: maps[i]['detail'],
-        page: maps[i]['page'],
-      );
-    });
+    List<BmModel> list = maps.isNotEmpty
+        ? List.generate(
+            maps.length,
+            (i) {
+              return BmModel(
+                id: maps[i]['id'],
+                title: maps[i]['title'],
+                subtitle: maps[i]['subtitle'],
+                detail: maps[i]['detail'],
+                page: maps[i]['page'],
+              );
+            },
+          )
+        : [];
+    return list;
   }
 
   Future<int> getBookMarkExists(int detail, int num) async {
     final db = await dbProvider.database;
 
     var cnt = Sqflite.firstIntValue(
-      await db
-          .rawQuery('''SELECT MAX(id) FROM $_bMarks WHERE detail=? AND page=?''', [detail, num]),
+      await db.rawQuery(
+          '''SELECT MAX(id) FROM $_bMarks WHERE detail=? AND page=?''',
+          [detail, num]),
     );
     return cnt ?? 0;
   }

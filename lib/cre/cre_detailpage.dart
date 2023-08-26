@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:geloofsbelydenis/bm/bm_dialog.dart';
+
 import '../main/db_model.dart';
 import '../main/db_queries.dart';
 

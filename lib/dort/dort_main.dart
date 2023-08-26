@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'dort_detailpage.dart';
-import '../main/db_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+import '../main/db_model.dart';
 import '../main/db_queries.dart';
+import 'dort_detailpage.dart';
 
 DbQueries _dbQueries = DbQueries();
 
@@ -38,7 +38,8 @@ class DortMainPageState extends State<DortMainPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           title: Text(
             chapters[index].chap,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
           subtitle: Row(
             children: <Widget>[
@@ -54,8 +55,8 @@ class DortMainPageState extends State<DortMainPage> {
               ),
             ],
           ),
-          trailing:
-              const Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          trailing: const Icon(Icons.keyboard_arrow_right,
+              color: Colors.white, size: 30.0),
           onTap: () {
             Future.delayed(
               const Duration(milliseconds: 200),
@@ -75,7 +76,8 @@ class DortMainPageState extends State<DortMainPage> {
           elevation: 8.0,
           margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
           child: Container(
-            decoration: const BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+            decoration:
+                const BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
             child: makeListTile(chapters, index),
           ),
         );

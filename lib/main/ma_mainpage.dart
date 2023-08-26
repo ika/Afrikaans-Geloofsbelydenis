@@ -1,13 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geloofsbelydenis/cre/cre_main.dart';
 import 'package:geloofsbelydenis/main/ma_detailpage.dart';
+import 'package:share/share.dart';
+
+import '../bm/bm_main.dart';
 import '../cat/cat_main.dart';
 import '../dort/dort_main.dart';
 import 'db_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:share/share.dart';
 import 'db_queries.dart';
-import '../bm/bm_main.dart';
 
 DbQueries _dbQueries = DbQueries();
 
@@ -91,21 +92,6 @@ class MainPageState extends State<MainPage> {
           ),
         );
 
-    // final makeBody = ListView.builder(
-    //   scrollDirection: Axis.vertical,
-    //   shrinkWrap: true,
-    //   itemCount: chapters == null ? 0 : chapters.length,
-    //   itemBuilder: (BuildContext context, int index) {
-    //     return makeCard(chapters, index);
-    //   },
-    // );
-
-    // final topAppBar = AppBar(
-    //   elevation: 0.1,
-    //   backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
-    //   title: const Text('Geloofsbelydenis'),
-    // );
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
@@ -134,7 +120,8 @@ class MainPageState extends State<MainPage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right,
+                  color: Colors.blueGrey),
               title: const Text('Boekmerke'),
               onTap: () => {
                 Navigator.pop(context),
@@ -173,7 +160,8 @@ class MainPageState extends State<MainPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right,
+                  color: Colors.blueGrey),
               title: const Text('Heidelbergse Kategismus'),
               onTap: () => {
                 Navigator.pop(context),
@@ -191,7 +179,8 @@ class MainPageState extends State<MainPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right,
+                  color: Colors.blueGrey),
               title: const Text('Dordtse Leerreëls'),
               onTap: () => {
                 Navigator.pop(context),
@@ -209,7 +198,8 @@ class MainPageState extends State<MainPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.keyboard_double_arrow_right, color: Colors.blueGrey),
+              leading: const Icon(Icons.keyboard_double_arrow_right,
+                  color: Colors.blueGrey),
               title: const Text('Deel hierdie Geloofsbelydenis'),
               onTap: () => {Navigator.pop(context), _onShareLink(context)},
             ),
